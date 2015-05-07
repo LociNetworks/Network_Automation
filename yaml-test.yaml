@@ -1,7 +1,7 @@
 ---
 - name: set lldp interface all
-  hosts: 104.160.154.1
-  user: mmiddlebrook
+  hosts: 192.168.1.1
+  user: malachi
 
   tasks:
 
