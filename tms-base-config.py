@@ -48,17 +48,19 @@ while True:
 # Get Leader IP and ensure it is in a valid format
 while True:
 	try:
-		tms_leader = IP(raw_input("What is the IP of the leader appliance - HINT: PDX21515AD01 = 104.160.128.20? "))
+		tms_leader = IP(raw_input("What is the IP of the leader appliance? "))
 		print tms_leader
 		print
 		break
 	except ValueError:
 		print("Please enter Leader IP in correct format")
 		print("Example: 192.168.0.1")
-		print("Hint: PDX21515AD01 = 104.160.128.20")
 		continue
 	else:
 		break
+
+#Get Zone Secret
+zone_secret = raw_input("What will the zone_secret be?: ")
 
 # Anything below this line will print to console
 print "################################################################################"
@@ -67,15 +69,15 @@ print "#########################################################################
 print
 
 #Set admin password
-print "services aaa local password admin encrypted $2a$05$qsrVrosoYvSmpGdtK01aOO.0KB9ByZt09I8NTFVPiJA2mgwoifXNy"
+print "services aaa local password admin encrypted <admin encrypted password"
 
 # Set system hostname
 print "system name set %s" % tms_hostname
 
 # Set up access ACL, then commit
-print "ip access add ping all 104.160.128.0/19"
-print "ip access add snmp all 104.160.128.0/24"
-print "ip access add ssh all 104.160.128.0/19"
+print "ip access add ping all 192.168.0.0/24"
+print "ip access add snmp all 192.168.0.0/24"
+print "ip access add ssh all 192.168.0.0/24"
 print "ip access commit"
 
 # Setup managment interface for IP connectivity
@@ -91,7 +93,7 @@ print "services ssh start"
 print "system attributes set shell.enabled = 1"
 
 # Set leader appliance
-print "services tms bootstrap %s riot" % tms_leader
+print ("services tms bootstrap %s %s" % (tms_leader, zone_secret));
 
 # Save all changes, changes will revert if not saved when rebooted
 print "config write"
