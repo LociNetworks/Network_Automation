@@ -13,18 +13,20 @@ user = raw_input("What is your username?: ")
 
 #Set password variable while validating password entered was correctly entered
 def passwd_check():
-	passwd1 = getpass.getpass('Enter your password: ')
-	passwd2 = getpass.getpass('Re-enter your password to verify: ')
-	if passwd1 != passwd2:
-		print
-		print 'Passwords do not match please try again!'
-		print
-		passwd_check()
-	else:
-		print 'Password Accepted'
-	return passwd2
+	while True:
+		passwd1 = getpass.getpass('Enter your password: ')
+		passwd2 = getpass.getpass('Re-enter your password to verify: ')
+		if passwd1 != passwd2:
+			print "Passwords do not match, please re-enter your password"
+			continue
+		elif passwd1 == passwd2:
+			print "Password Accpeted"
+			return passwd2
+
 
 passwd = passwd_check()
+
+# print passwd
 
 #Automagically add ssh keys to known hosts
 ssh.set_missing_host_key_policy(
